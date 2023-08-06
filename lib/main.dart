@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sqflite_app/screen/future_add.dart';
+import 'package:sqflite_app/screen/future_page.dart';
 import 'package:sqflite_app/screen/note_page.dart';
 import 'package:sqflite_app/screen/add_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -43,6 +46,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     MaterialPageRoute(builder: (context) => NotePage()));
               },
               icon: const Icon(Icons.feed)),
+              const SizedBox(width: 10),
+              IconButton(onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const FuturePage()));
+              }, icon: const Icon(Icons.network_cell)),
+              const SizedBox(width: 10),
+              IconButton(onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const FutureAdd()));
+              }, icon: const Icon(Icons.add))
         ],
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
@@ -52,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Sqflite App',
             ),
           ],
         ),
