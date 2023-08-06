@@ -19,7 +19,7 @@ class _NotePageState extends State<NotePage> {
           title: const Text('Edit Page'),
         ),
         body: FutureBuilder<List<Note>?>(
-          future: DatabaseHelper.getAllNote(),
+          future: DatabaseHelper().getAllNote(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -46,7 +46,7 @@ class _NotePageState extends State<NotePage> {
                       },
                       leading: IconButton(
                           onPressed: () {
-                            DatabaseHelper.deleteNote(note);
+                            DatabaseHelper().deleteNote(note);
                             setState(() {});
                           },
                           icon: const Icon(Icons.delete)),

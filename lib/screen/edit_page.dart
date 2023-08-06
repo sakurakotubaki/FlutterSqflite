@@ -60,7 +60,7 @@ class _EditPageState extends State<EditPage> {
                       description: description,
                       id: widget.note?.id);
 
-                  DatabaseHelper.updateNote(model);
+                  DatabaseHelper().updateNote(model);
                   if (context.mounted) {
                     Navigator.pop(context);
                   }

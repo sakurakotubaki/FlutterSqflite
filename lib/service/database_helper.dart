@@ -9,7 +9,7 @@ class DatabaseHelper {
   // データベースの名前
   static const String _dbName = 'Notes.db';
   // データベースのインスタンス
-  static Future<Database> _getDB() async {
+  Future<Database> _getDB() async {
     // データベースのパスを取得
     return openDatabase(
       // データベースのパスを指定
@@ -25,7 +25,7 @@ class DatabaseHelper {
     );
   }
   // データベースにデータを追加, int型なのは追加したデータのidを返すため
-  static Future<int> addNote(Note note) async {
+  Future<int> addNote(Note note) async {
     // データベースのインスタンスを取得
     final db = await _getDB();
     // データベースにデータを追加
@@ -36,7 +36,7 @@ class DatabaseHelper {
     );
   }
   // データベースのデータを更新, int型なのは更新したデータのidを返すため
-  static Future<int> updateNote(Note note) async {
+  Future<int> updateNote(Note note) async {
     final db = await _getDB();
     return await db.update(
       'Note',
@@ -47,7 +47,7 @@ class DatabaseHelper {
     );
   }
   // データベースのデータを削除, int型なのは削除したデータのidを返すため
-  static Future<int> deleteNote(Note note) async {
+  Future<int> deleteNote(Note note) async {
     final db = await _getDB();
     return await db.delete(
       'Note',
@@ -56,7 +56,7 @@ class DatabaseHelper {
     );
   }
   // データベースのデータを全て取得
-  static Future<List<Note>?> getAllNote() async {
+  Future<List<Note>?> getAllNote() async {
     final db = await _getDB();
 
     final List<Map<String, dynamic>> maps = await db.query('Note');

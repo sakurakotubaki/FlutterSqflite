@@ -43,7 +43,7 @@ class AddPage extends StatelessWidget {
 
                     final Note model = Note(
                         title: title, description: description, id: note?.id);
-                    await DatabaseHelper.addNote(model);
+                    await DatabaseHelper().addNote(model);
                     if (context.mounted) {
                       Navigator.pop(context);
                     }
