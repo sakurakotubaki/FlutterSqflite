@@ -33,7 +33,6 @@ dependencies:
     sdk: flutter
   flutter_riverpod: ^2.3.6
   intl: ^0.18.1
-  path: ^1.8.3
   sqflite: ^2.3.0
 
 dev_dependencies:
