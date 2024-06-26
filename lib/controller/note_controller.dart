@@ -1,6 +1,7 @@
 import 'package:sqflite_app/domain/entity/note_model.dart';
 import 'package:sqflite_app/domain/repository/note_repository.dart';
 
+// Viewから呼び出すロジックはControllerを経由する。
 class NoteController {
   final NoteRepository _noteRepository;
   NoteController(this._noteRepository);
