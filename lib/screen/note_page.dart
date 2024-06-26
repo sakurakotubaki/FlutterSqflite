@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_app/model/note_model.dart';
+import 'package:sqflite_app/domain/entity/note_model.dart';
 import 'package:sqflite_app/screen/edit_page.dart';
-import 'package:sqflite_app/service/database_helper.dart';
+import 'package:sqflite_app/application/service/database_helper.dart';
 
 class NotePage extends StatefulWidget {
   NotePage({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_app/model/note_model.dart';
+import 'package:sqflite_app/domain/entity/note_model.dart';
 
 // データべースの操作を行うクラス
 class DatabaseHelper {
