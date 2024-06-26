@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_app/model/note_model.dart';
-import 'package:sqflite_app/screen/edit_page.dart';
-import 'package:sqflite_app/service/database_helper.dart';
+import 'package:sqflite_app/controller/note_controller.dart';
+import 'package:sqflite_app/domain/entity/note_model.dart';
+import 'package:sqflite_app/domain/repository/note_repository.dart';
+import 'package:sqflite_app/presentation/screen/edit_page.dart';
+import 'package:sqflite_app/presentation/widget/indicator_widget.dart';
 
 class NotePage extends StatefulWidget {
-  NotePage({Key? key}) : super(key: key);
+  const NotePage({Key? key}) : super(key: key);
 
   @override
   State<NotePage> createState() => _NotePageState();
 }
 
 class _NotePageState extends State<NotePage> {
+  // DIしたクラス　
+  late NoteRepositoryImpl noteRepositoryImpl;
+  late NoteController noteController;
+
+  @override
+  void initState() {
+    super.initState();
+    noteRepositoryImpl = NoteRepositoryImpl();
+    noteController = NoteController(noteRepositoryImpl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +32,7 @@ class _NotePageState extends State<NotePage> {
           title: const Text('Edit Page'),
         ),
         body: FutureBuilder<List<Note>?>(
-          future: DatabaseHelper().getAllNote(),
+          future: noteController.getNotes(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -46,7 +59,7 @@ class _NotePageState extends State<NotePage> {
                       },
                       leading: IconButton(
                           onPressed: () {
-                            DatabaseHelper().deleteNote(note);
+                            noteController.delete(note);
                             setState(() {});
                           },
                           icon: const Icon(Icons.delete)),
@@ -58,7 +71,7 @@ class _NotePageState extends State<NotePage> {
               }
             }
             return const Center(
-              child: CircularProgressIndicator(),
+              child:  IndicatorWidget(),
             );
           },
         ));

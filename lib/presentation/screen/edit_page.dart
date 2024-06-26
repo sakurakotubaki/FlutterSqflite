@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_app/model/note_model.dart';
-import 'package:sqflite_app/service/database_helper.dart';
+import 'package:sqflite_app/controller/note_controller.dart';
+import 'package:sqflite_app/domain/entity/note_model.dart';
+import 'package:sqflite_app/domain/repository/note_repository.dart';
 
 // ignore: must_be_immutable
 class EditPage extends StatefulWidget {
@@ -12,18 +13,33 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
+
+  // DIしたクラス　
+  late NoteRepositoryImpl noteRepositoryImpl;
+  late NoteController noteController;
+
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+    noteRepositoryImpl = NoteRepositoryImpl();
+    noteController = NoteController(noteRepositoryImpl);
+  }
+  
     final titleController = TextEditingController();
     final descriptionController = TextEditingController();
 
-    dispose() {
+    @override
+    void dispose() {
       titleController.dispose();
       descriptionController.dispose();
       super.dispose();
     }
 
+  @override
+  Widget build(BuildContext context) {
+
     return Scaffold(
+      backgroundColor: Colors.green,
       appBar: AppBar(
         title: const Text('EditPage'),
       ),
@@ -60,7 +76,7 @@ class _EditPageState extends State<EditPage> {
                       description: description,
                       id: widget.note?.id);
 
-                  DatabaseHelper().updateNote(model);
+                  await noteController.update(model);
                   if (context.mounted) {
                     Navigator.pop(context);
                   }

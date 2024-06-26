@@ -1,16 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_app/model/note_model.dart';
-import 'package:sqflite_app/service/database_helper.dart';
+import 'package:sqflite_app/controller/note_controller.dart';
+import 'package:sqflite_app/domain/entity/note_model.dart';
+import 'package:sqflite_app/domain/repository/note_repository.dart';
 
-class AddPage extends StatelessWidget {
+class AddPage extends StatefulWidget {
   final Note? note;
   const AddPage({Key? key, this.note}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final titleController = TextEditingController();
-    final descriptionController = TextEditingController();
+  State<AddPage> createState() => _AddPageState();
+}
 
+class _AddPageState extends State<AddPage> {
+  // DIしたクラス　
+  late NoteRepositoryImpl noteRepositoryImpl;
+  late NoteController noteController;
+
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    noteRepositoryImpl = NoteRepositoryImpl();
+    noteController = NoteController(noteRepositoryImpl);
+  }
+
+  @override
+  void dispose() {
+    titleController.dispose();
+    descriptionController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('Add Note')),
         body: Padding(
@@ -42,8 +66,10 @@ class AddPage extends StatelessWidget {
                     }
 
                     final Note model = Note(
-                        title: title, description: description, id: note?.id);
-                    await DatabaseHelper().addNote(model);
+                        title: title,
+                        description: description,
+                        id: widget.note?.id);
+                    await noteController.insert(model);
                     if (context.mounted) {
                       Navigator.pop(context);
                     }
